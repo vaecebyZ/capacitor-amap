@@ -1,6 +1,8 @@
 # capacitor-amap
 高德地图 Capacitor 插件（定位、天气、距离计算等）。
 
+> 注意：从 1.0.2 起包名改为 `@vaecebyz/capacitor-amap` 并附带两个 podspec (`CapacitorAmap.podspec` 与 `VaecebyzCapacitorAmap.podspec`) 以兼容 Capacitor CLI 在不同版本下的命名解析。支持 Capacitor 3 - 7。
+
 ## 特性
 - 单次定位（含逆地理信息）
 - 天气实时查询（按城市/行政区编码）
@@ -13,10 +15,8 @@
 - JDK 11（构建插件时建议使用；旧版 AGP 4.2.1 与 JDK 17/21 不兼容）
 
 ## 安装
-
-## 安装
-```shell
-npm install capacitor-amap
+```bash
+npm install @vaecebyz/capacitor-amap
 npx cap sync
 ```
 ## 配置
