@@ -1,6 +1,6 @@
 {
   "name": "@vaecebyz/capacitor-amap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "capacitor-amap",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
