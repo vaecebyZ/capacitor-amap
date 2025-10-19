@@ -1,5 +1,9 @@
 import Foundation
 import Capacitor
+import CoreLocation
+import AMapFoundationKit
+import AMapLocationKit
+import AMapSearchKit
 var locateCalls = [CAPPluginCall]()
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -56,14 +60,22 @@ public class CapacitorAMapPlugin: CAPPlugin, AMapLocationManagerDelegate, AMapSe
     }
     
     @objc func calculate(_ call: CAPPluginCall){
-        //1.将两个经纬度点转成投影点
-        let point1 = MAMapPointForCoordinate(CLLocationCoordinate2D(latitude: call.getDouble("startLatitude") ?? 0, longitude: call.getDouble("startLongitude") ?? 0))
-        let point2 = MAMapPointForCoordinate(CLLocationCoordinate2D(latitude: call.getDouble("endLatitude") ?? 0, longitude: call.getDouble("endLongitude") ?? 0))
-        let distance = MAMetersBetweenMapPoints(point1,point2)
+        let lat1 = call.getDouble("startLatitude") ?? 0
+        let lon1 = call.getDouble("startLongitude") ?? 0
+        let lat2 = call.getDouble("endLatitude") ?? 0
+        let lon2 = call.getDouble("endLongitude") ?? 0
+        // Haversine formula
+        let R = 6371000.0 // Earth radius in meters
+        let φ1 = lat1 * .pi / 180
+        let φ2 = lat2 * .pi / 180
+        let Δφ = (lat2 - lat1) * .pi / 180
+        let Δλ = (lon2 - lon1) * .pi / 180
+        let a = sin(Δφ/2) * sin(Δφ/2) + cos(φ1) * cos(φ2) * sin(Δλ/2) * sin(Δλ/2)
+        let c = 2 * atan2(sqrt(a), sqrt(1-a))
+        let distance = R * c
         var result = [String:Double]()
         result.updateValue(distance, forKey: "distance")
         call.resolve(result)
-                                             
     }
     
     @objc func weather(_ call: CAPPluginCall){
@@ -106,7 +118,7 @@ public class CapacitorAMapPlugin: CAPPlugin, AMapLocationManagerDelegate, AMapSe
                         locateCalls.removeAll()
                         return;
                     }
-                    else if (error != nil && error.code == AMapLocationErrorCode.riskOfFakeLocation.rawValue)
+                    else if (error.code == AMapLocationErrorCode.riskOfFakeLocation.rawValue)
                     {
                         NSLog("存在虚拟定位的风险:{\(error.code) - \(error.localizedDescription)};")
                         for item in locateCalls{
@@ -121,8 +133,8 @@ public class CapacitorAMapPlugin: CAPPlugin, AMapLocationManagerDelegate, AMapSe
                     if let reGeocode = reGeocode {
                         NSLog("reGeocode:%@", reGeocode);
                         var result = [String:String]()
-                        result.updateValue(String(location.coordinate.latitude) ?? "", forKey: "latitude")
-                        result.updateValue(String(location.coordinate.longitude) ?? "", forKey: "longitude")
+                        result.updateValue(String(location.coordinate.latitude), forKey: "latitude")
+                        result.updateValue(String(location.coordinate.longitude), forKey: "longitude")
                         result.updateValue(reGeocode.formattedAddress ?? "", forKey: "address")
                         result.updateValue(reGeocode.number ?? "", forKey: "streetNum")
                         result.updateValue(reGeocode.country ?? "", forKey: "country")

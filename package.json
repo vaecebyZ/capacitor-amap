@@ -15,13 +15,6 @@
   ],
   "author": "ChenWei",
   "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/site-chenwei/capacitor-plugins.git.git"
-  },
-  "bugs": {
-    "url": "https://github.com/site-chenwei/capacitor-plugins.git/issues"
-  },
   "keywords": [
     "capacitor",
     "plugin",
@@ -29,7 +22,7 @@
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
+    "verify:ios": "bash scripts/verify-ios.sh",
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "npm run build",
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",

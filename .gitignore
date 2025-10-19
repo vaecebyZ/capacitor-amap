@@ -127,3 +127,53 @@ dist
 .pnp.*
 android/build
 .idea
+android/.gradle
+android/local.properties
+android/captures/
+android/.idea/
+android/.classpath
+android/.project
+android/.settings/
+android/*.iml
+
+# Gradle caches (keep wrapper jar/properties)
+**/build/
+**/.gradle/
+
+# iOS / Xcode
+ios/Pods/
+ios/Podfile.lock
+ios/Plugin.xcworkspace/xcuserdata/
+ios/Plugin.xcodeproj/xcuserdata/
+ios/Plugin.xcodeproj/project.xcworkspace/xcuserdata/
+ios/DerivedData/
+**/DerivedData/
+*.xcbkptlist
+*.xcscmblueprint
+*.xcuserstate
+
+# Swift Package Manager (if later added)
+.build/
+Package.resolved
+
+# Simulator device data (never commit)
+Library/Developer/CoreSimulator/Devices/
+
+# Capacitor build artifacts
+electron/
+web-build/
+
+# Misc archives
+*.zip
+*.tar
+*.tar.gz
+
+# macOS filesystem noise
+.DS_Store
+._*
+
+# VSCode workspace settings (optional keep if you want project defaults)
+.vscode/
+
+# Logs from xcodebuild
+*.xcresult

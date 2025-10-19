@@ -14,8 +14,9 @@ Pod::Spec.new do |s|
   s.ios.deployment_target  = '12.0'
   s.dependency 'Capacitor'
   s.static_framework = true
-  s.dependency 'AMap3DMap-NO-IDFA'
-  s.dependency 'AMapSearch-NO-IDFA'
-  s.dependency 'AMapLocation-NO-IDFA'
+  # Replace deprecated NO-IDFA pods with actively maintained base pods matching Podfile
+  s.dependency 'AMapFoundation'
+  s.dependency 'AMapSearch'
+  s.dependency 'AMapLocation'
   s.swift_version = '5.1'
 end

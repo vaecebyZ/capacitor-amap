@@ -1,5 +1,18 @@
 # capacitor-amap
- 高德地图capacitor插件
+高德地图 Capacitor 插件（定位、天气、距离计算等）。
+
+## 特性
+- 单次定位（含逆地理信息）
+- 天气实时查询（按城市/行政区编码）
+- 经纬度距离计算（Haversine，纯数学实现无地图视图依赖）
+
+## 支持环境
+- Capacitor 3.x
+- iOS 12+ (AMapFoundation / AMapLocation / AMapSearch)
+- Android API 21+ (使用高德定位/搜索/3D 地图 SDK)
+- JDK 11（构建插件时建议使用；旧版 AGP 4.2.1 与 JDK 17/21 不兼容）
+
+## 安装
 
 ## 安装
 ```shell
@@ -7,9 +20,8 @@ npm install capacitor-amap
 npx cap sync
 ```
 ## 配置
-### IOS
-配置IOS_KEY
-IOS安装插件后，需在项目的capacitor.config.ts/capacitor.config.json中为项目配置IOS_KEY
+### iOS
+在 `capacitor.config.ts` / `capacitor.config.json` 中配置 `iosKey`：
 ```typescript
 const config: CapacitorConfig = {
     plugins: {
@@ -20,7 +32,7 @@ const config: CapacitorConfig = {
 };
 ```
 
-IOS安装插件后，需在XCODE的info.plist中为项目配置以下内容
+在 Xcode 的 `Info.plist` 中添加定位权限文案：
 ```
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>此应用需要定位权限才能正常使用</string>
@@ -28,6 +40,84 @@ IOS安装插件后，需在XCODE的info.plist中为项目配置以下内容
 <img width="1026" alt="image" src="https://user-images.githubusercontent.com/23025255/161018082-6904e5b1-e5e8-4621-bed1-772c7f1d5fbf.png">
 
 ### Android
-Android安装插件后，需要在安卓项目app模块的AndroidManifest.xml中修改自己的高德安卓API_KEY
+在你的应用模块 `AndroidManifest.xml` 中加入高德 Android API Key：
+
+```xml
+<application>
+        <!-- 你的其它配置 -->
+        <meta-data
+                android:name="com.amap.api.v2.apikey"
+                android:value="YOUR_ANDROID_API_KEY" />
+</application>
+```
+
+并确保已有定位相关权限（如果只做单次定位，可按需裁剪）：
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+### 构建注意事项
+1. 使用 JDK 11：若使用 sdkman，可 `sdk use java 11.*` 后再执行 `npm run verify`。
+2. 若你升级 Android Gradle Plugin 到 7+/8+，需要同步升级 Capacitor 依赖并添加 `namespace`，本插件当前以稳定回退（AGP 4.2.1）为主。
+3. iOS 初次构建需要安装对应 iOS 平台 SDK（Xcode Preferences -> Components）。
+
+### iOS Pods
+本插件在 Pod 安装时会引入：
+- `AMapFoundation`
+- `AMapLocation`
+- `AMapSearch`
+
+无需引入 `AMap3DMap` 以实现定位与天气。
+
+## 使用示例
+
+```typescript
+import { Plugins } from '@capacitor/core';
+const { CapacitorAMap } = Plugins as any;
+
+// 定位
+CapacitorAMap.locate().then(res => {
+    console.log('定位结果', res);
+}).catch(err => console.error('定位失败', err));
+
+// 天气查询 (adCode 可为城市/区县行政区编码)
+CapacitorAMap.weather({ adCode: '310000' }).then(res => {
+    console.log('天气', res);
+});
+
+// 距离计算
+const distanceRes = await CapacitorAMap.calculate({
+    startLatitude: 31.2304,
+    startLongitude: 121.4737,
+    endLatitude: 39.9042,
+    endLongitude: 116.4074,
+});
+console.log('两点距离(米):', distanceRes.distance);
+```
+
+## API
+
+| 方法 | 参数 | 返回 | 说明 |
+|------|------|------|------|
+| `locate()` | 无 | 定位 + 逆地理对象 | 单次定位，返回经纬度和地址字段 |
+| `weather({ adCode })` | `adCode: string` | 天气对象 | 查询实时天气 |
+| `calculate({ startLatitude, startLongitude, endLatitude, endLongitude })` | 数值 | `{ distance: number }` | 计算两点球面距离 (米) |
+
+## 发布/构建脚本
+执行自检：
+```bash
+npm run verify   # iOS / Android / Web 快速构建
+npm run build    # 生成 dist 与文档
+```
+
+## 许可证
+Apache-2.0
 
 <img width="1384" alt="image" src="https://user-images.githubusercontent.com/23025255/161021530-eb2ba6d6-e4ed-41e9-b042-67f03f538933.png">

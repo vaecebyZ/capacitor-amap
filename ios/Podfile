@@ -1,4 +1,5 @@
 platform :ios, '12.0'
+source 'https://github.com/CocoaPods/Specs.git'
 
 def capacitor_pods
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -9,8 +10,15 @@ end
 
 target 'Plugin' do
   capacitor_pods
+  # AMap SDK dependencies for location, search, map utilities (NO-IDFA variant to avoid advertising identifier)
+  pod 'AMapFoundation'
+  pod 'AMapLocation'
+  pod 'AMapSearch'
 end
 
 target 'PluginTests' do
   capacitor_pods
+  pod 'AMapFoundation'
+  pod 'AMapLocation'
+  pod 'AMapSearch'
 end

@@ -1,11 +1,25 @@
 PODS:
-  - Capacitor (3.4.3):
+  - AMapFoundation (1.8.2)
+  - AMapLocation (2.11.0):
+    - AMapFoundation (>= 1.8.0)
+  - AMapSearch (9.7.4):
+    - AMapFoundation (>= 1.8.0)
+  - Capacitor (3.9.0):
     - CapacitorCordova
-  - CapacitorCordova (3.4.3)
+  - CapacitorCordova (3.9.0)
 
 DEPENDENCIES:
+  - AMapFoundation
+  - AMapLocation
+  - AMapSearch
   - "Capacitor (from `../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../node_modules/@capacitor/ios`)"
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AMapFoundation
+    - AMapLocation
+    - AMapSearch
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -14,9 +28,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Capacitor: a8d7fa9fb3b50adc610247bb8d0310e83424f746
-  CapacitorCordova: 687b7d3ef4872c03aa2a2eb052d23008be9ad76b
+  AMapFoundation: 9885c48fc3a78fdfb84a0299a2293e56ea3c9fec
+  AMapLocation: 8c46dbe995333ad6cae147d54a7307a577020be0
+  AMapSearch: a30e89212f55a867ac951ce71f800313cd54ad0a
+  Capacitor: 1bee2352ce202532e9193d99665f124f943d8cd3
+  CapacitorCordova: 3c768ee86bbedd4b99b68551a78ed24128bacb40
 
-PODFILE CHECKSUM: d908dea01cb4b1885654341d3f4274148fb6d382
+PODFILE CHECKSUM: c6c5c9b697effa5b291bab1eb18c8de86a72fe4e
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.16.2
