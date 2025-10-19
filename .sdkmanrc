@@ -1,0 +1,9 @@
+# SDKMAN configuration for this project
+# Run `sdk env` inside the project root to auto switch.
+# You can also enable auto-env in SDKMAN by: sdk config set auto_env=true
+
+# Pin a Java 11 distribution (Temurin recommended). Adjust if you prefer other vendor like zulu or corretto.
+java=11.0.28-amzn
+
+# Example: if you need Gradle different from wrapper (normally wrapper handles it):
+# gradle=6.7.1

@@ -37,6 +37,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    // 固定使用 JDK 11 编译。虽然 source/target 仍为 1.8 (与 AGP 4.2.1 默认兼容)，
+    // 但我们通过 JavaCompile 的 --release 选项确保使用 JDK 11 工具链运行而生成 Java 8 兼容字节码。
+    // 如果未来升级到更高的 AGP，可直接改为 sourceCompatibility/targetCompatibility = JavaVersion.VERSION_11。
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

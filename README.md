@@ -3,8 +3,6 @@
 
 > 注意：从 1.0.2 起包名改为 `@vaecebyz/capacitor-amap` 并附带两个 podspec (`CapacitorAmap.podspec` 与 `VaecebyzCapacitorAmap.podspec`) 以兼容 Capacitor CLI 在不同版本下的命名解析。支持 Capacitor 3 - 7。
 
-> 1.0.3 修复：1.0.2 发布包遗漏 `VaecebyzCapacitorAmap.podspec`（未列入 files），导致部分项目 `npx cap sync ios` 报错 `No podspec found for VaecebyzCapacitorAmap`。请升级到 1.0.3 及以上版本。
-
 ## 特性
 - 单次定位（含逆地理信息）
 - 天气实时查询（按城市/行政区编码）
@@ -16,23 +14,14 @@
 - Android API 21+ (使用高德定位/搜索/3D 地图 SDK)
 - JDK 11（构建插件时建议使用；旧版 AGP 4.2.1 与 JDK 17/21 不兼容）
 
+> 本仓库已固定使用 JDK 11。进入目录后可运行 `sdk env`（或开启 SDKMAN 的 auto-env）自动切换到 `.sdkmanrc` 指定的版本。
+> 若你的全局默认是 JDK 21，请务必在构建本插件或运行验证脚本前切换到 11，以避免 AGP 4.2.x 的兼容性问题。
+
 ## 安装
 ```bash
 npm install @vaecebyz/capacitor-amap
 npx cap sync
 ```
-
-### 若使用 <=1.0.2 遇到 Podspec 缺失临时解决方案
-在升级前可在你的 App 的 `ios/App/Podfile` 手动指定原始 podspec 名称：
-```ruby
-pod 'CapacitorAmap', :path => '../node_modules/@vaecebyz/capacitor-amap'
-```
-然后执行：
-```bash
-cd ios/App
-pod install --repo-update
-```
-建议随后升级到 1.0.3 以移除该 workaround。
 ## 配置
 ### iOS
 在 `capacitor.config.ts` / `capacitor.config.json` 中配置 `iosKey`：
@@ -78,9 +67,36 @@ const config: CapacitorConfig = {
 ```
 
 ### 构建注意事项
-1. 使用 JDK 11：若使用 sdkman，可 `sdk use java 11.*` 后再执行 `npm run verify`。
+1. 使用 JDK 11：若使用 sdkman，可 `sdk env` 或 `sdk use java 11.*` 后再执行 `npm run verify`。
 2. 若你升级 Android Gradle Plugin 到 7+/8+，需要同步升级 Capacitor 依赖并添加 `namespace`，本插件当前以稳定回退（AGP 4.2.1）为主。
 3. iOS 初次构建需要安装对应 iOS 平台 SDK（Xcode Preferences -> Components）。
+
+#### 使用 SDKMAN 自动切换 JDK
+仓库根目录包含 `.sdkmanrc`：
+
+```properties
+java=11.0.23-tem
+```
+
+执行：
+
+```bash
+sdk env   # 切换到 .sdkmanrc 指定的 JDK 11
+```
+
+或启用自动：
+
+```bash
+sdk config set auto_env=true
+```
+
+验证：
+
+```bash
+./android/gradlew -version
+```
+
+输出中应显示 "Java 11"。
 
 ### iOS Pods
 本插件在 Pod 安装时会引入：
