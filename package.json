@@ -1,7 +1,7 @@
 {
   "name": "@vaecebyz/capacitor-amap",
   "version": "1.0.3",
-  "description": "capacitor-amap",
+  "description": "capacitor-amap (original repo site-chenwei/capacitor-plugins unmaintained; this fork continues maintenance)",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -27,7 +27,11 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "amap",
+    "gaode",
+    "location",
+    "deprecated-origin"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",

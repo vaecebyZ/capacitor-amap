@@ -1,6 +1,8 @@
 # capacitor-amap
 高德地图 Capacitor 插件（定位、天气、距离计算等）。
 
+> 本包基于原 `capacitor-plugin-getui` 演进，原作者已不再维护；现由 `vaecebyZ` 继续维护。保留原 MIT 许可归属。
+
 > 注意：从 1.0.2 起包名改为 `@vaecebyz/capacitor-amap` 并附带两个 podspec (`CapacitorAmap.podspec` 与 `VaecebyzCapacitorAmap.podspec`) 以兼容 Capacitor CLI 在不同版本下的命名解析。支持 Capacitor 3 - 7。
 
 ## 特性
