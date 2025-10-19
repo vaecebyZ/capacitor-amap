@@ -3,6 +3,8 @@
 
 > 注意：从 1.0.2 起包名改为 `@vaecebyz/capacitor-amap` 并附带两个 podspec (`CapacitorAmap.podspec` 与 `VaecebyzCapacitorAmap.podspec`) 以兼容 Capacitor CLI 在不同版本下的命名解析。支持 Capacitor 3 - 7。
 
+> 1.0.3 修复：1.0.2 发布包遗漏 `VaecebyzCapacitorAmap.podspec`（未列入 files），导致部分项目 `npx cap sync ios` 报错 `No podspec found for VaecebyzCapacitorAmap`。请升级到 1.0.3 及以上版本。
+
 ## 特性
 - 单次定位（含逆地理信息）
 - 天气实时查询（按城市/行政区编码）
@@ -19,6 +21,18 @@
 npm install @vaecebyz/capacitor-amap
 npx cap sync
 ```
+
+### 若使用 <=1.0.2 遇到 Podspec 缺失临时解决方案
+在升级前可在你的 App 的 `ios/App/Podfile` 手动指定原始 podspec 名称：
+```ruby
+pod 'CapacitorAmap', :path => '../node_modules/@vaecebyz/capacitor-amap'
+```
+然后执行：
+```bash
+cd ios/App
+pod install --repo-update
+```
+建议随后升级到 1.0.3 以移除该 workaround。
 ## 配置
 ### iOS
 在 `capacitor.config.ts` / `capacitor.config.json` 中配置 `iosKey`：
