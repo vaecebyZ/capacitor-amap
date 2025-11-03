@@ -56,8 +56,6 @@ dependencies {
     implementation project(':capacitor-android')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
 
-    // ✅ 高德 SDK（推荐最新版本）
-    implementation 'com.amap.api:location:latest.integration'
     implementation 'com.amap.api:3dmap:latest.integration'
     implementation 'com.amap.api:search:latest.integration'
 
