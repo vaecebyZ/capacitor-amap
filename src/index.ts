@@ -1,8 +1,8 @@
 import { registerPlugin } from '@capacitor/core';
 
-import type { CapacitorAMapPlugin } from './definitions';
+import type { AmapPlugin } from './definitions';
 
-const CapacitorAMap = registerPlugin<CapacitorAMapPlugin>('CapacitorAMap', {
+const CapacitorAMap = registerPlugin<AmapPlugin>('CapacitorAMap', {
   web: () => import('./web').then(m => new m.CapacitorAMapWeb()),
 });
 
