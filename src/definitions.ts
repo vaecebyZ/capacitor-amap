@@ -23,7 +23,9 @@ export interface AmapPlugin {
 
   checkPermissions(): Promise<PermissionStatus>;
 
-  requestPermissions(): Promise<PermissionStatus>
+  requestPermissions(): Promise<PermissionStatus>;
+
+  echo(): Promise<string>
 }
 
 export interface Location {

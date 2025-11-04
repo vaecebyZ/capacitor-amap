@@ -3,6 +3,11 @@ import { WebPlugin } from '@capacitor/core';
 import type { AmapPlugin, Location, WeatherInfo, PermissionStatus } from './definitions';
 
 export class CapacitorAMapWeb extends WebPlugin implements AmapPlugin {
+
+  async echo(): Promise<string>{
+    return "";
+  }
+
   async locate(): Promise<Location | undefined> {
     return undefined;
   }

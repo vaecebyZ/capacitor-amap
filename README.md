@@ -18,6 +18,7 @@ npx cap sync
 * [`calculate(...)`](#calculate)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
+* [`echo()`](#echo)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
 
@@ -82,6 +83,17 @@ checkPermissions() => any
 
 ```typescript
 requestPermissions() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### echo()
+
+```typescript
+echo() => any
 ```
 
 **Returns:** <code>any</code>

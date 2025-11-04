@@ -11,6 +11,9 @@ importers:
       '@capacitor/cli':
         specifier: ^7.4.4
         version: 7.4.4
+      Code:
+        specifier: link:..
+        version: link:..
     devDependencies:
       '@capacitor/android':
         specifier: ^7.0.0

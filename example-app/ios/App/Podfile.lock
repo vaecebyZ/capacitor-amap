@@ -1,0 +1,49 @@
+PODS:
+  - AMap3DMap-NO-IDFA (10.1.600):
+    - AMapFoundation-NO-IDFA (>= 1.8.0)
+  - AMapFoundation-NO-IDFA (1.8.2)
+  - AMapLocation-NO-IDFA (2.11.0):
+    - AMapFoundation-NO-IDFA (>= 1.8.0)
+  - AMapSearch-NO-IDFA (9.7.4):
+    - AMapFoundation-NO-IDFA (>= 1.8.0)
+  - Capacitor (7.0.0):
+    - CapacitorCordova
+  - CapacitorCordova (7.0.0)
+  - VaecebyzCapacitorAmap (1.0.7):
+    - AMap3DMap-NO-IDFA
+    - AMapLocation-NO-IDFA
+    - AMapSearch-NO-IDFA
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@7.0.0_@capacitor+core@7.4.4/node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.0.0_@capacitor+core@7.4.4/node_modules/@capacitor/ios`)"
+  - VaecebyzCapacitorAmap (from `../../..`)
+
+SPEC REPOS:
+  trunk:
+    - AMap3DMap-NO-IDFA
+    - AMapFoundation-NO-IDFA
+    - AMapLocation-NO-IDFA
+    - AMapSearch-NO-IDFA
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.0.0_@capacitor+core@7.4.4/node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.0.0_@capacitor+core@7.4.4/node_modules/@capacitor/ios"
+  VaecebyzCapacitorAmap:
+    :path: "../../.."
+
+SPEC CHECKSUMS:
+  AMap3DMap-NO-IDFA: 5279e94b7d4d6561826c63411f52389a3b2e2eff
+  AMapFoundation-NO-IDFA: 6ce0ef596d4eb8d934ff498e56747b6de1247b05
+  AMapLocation-NO-IDFA: 590fd42af0c8ea9eac26978348221bbc16be4ef9
+  AMapSearch-NO-IDFA: 53b2193244be8f07f3be0a4d5161200236960587
+  Capacitor: 82d1f3b4480d66b5996814f74500dcbc0908558c
+  CapacitorCordova: 345f93b7edd121db98e4ec20ac94d6d7bcaf7e48
+  VaecebyzCapacitorAmap: 8379a0790ba6dadb67c33dc70e24926799037582
+
+PODFILE CHECKSUM: 1a63da6ddd2842a9513e1c39c4eb097128e75dcb
+
+COCOAPODS: 1.16.2
