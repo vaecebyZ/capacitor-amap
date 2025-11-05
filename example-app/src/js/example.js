@@ -1,13 +1,18 @@
 import { CapacitorAMap } from '@vaecebyz/capacitor-amap';
 
 window.testEcho = () => {
-    const inputValue = document.getElementById("echoInput").value;
-    console.log(inputValue)
-    console.log(CapacitorAMap)
-    CapacitorAMap.echo("1232132")
-    CapacitorAMap.checkPermissions()
-    CapacitorAMap.requestPermissions()
-    CapacitorAMap.locate().then(async (result) => {
+  const inputValue = document.getElementById('echoInput').value;
+  window._AMapSecurityConfig = {
+    securityJsCode: 'd9b057f4fad2daec3879e97b0c6f19d8',
+  };
+  console.log(inputValue);
+  CapacitorAMap.echo();
+  CapacitorAMap.load();
+  setTimeout(() => {
+    CapacitorAMap.checkPermissions();
+    CapacitorAMap.requestPermissions();
+    CapacitorAMap.locate()
+      .then(async (result) => {
         // {result
         //     "accuracy": 30,
         //     "adCode": "500105",
@@ -48,14 +53,16 @@ window.testEcho = () => {
         // }
         if (content && content.status === '1') {
           // const addrComp = content.regeocode?.addressComponent || {}
-        //   userPosition.value = [result!.longitude, result!.latitude];
-          return true
+          //   userPosition.value = [result!.longitude, result!.latitude];
+          return true;
         } else {
           console.error('解析定位地址失败:', content);
-          return false
+          return false;
         }
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error('CapacitorAMap locate error:', error);
-        return false
+        return false;
       });
-}
+  }, 2000);
+};

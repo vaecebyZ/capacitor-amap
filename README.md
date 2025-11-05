@@ -13,6 +13,7 @@ npx cap sync
 
 <docgen-index>
 
+* [`load()`](#load)
 * [`locate()`](#locate)
 * [`weather(...)`](#weather)
 * [`calculate(...)`](#calculate)
@@ -26,6 +27,17 @@ npx cap sync
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### load()
+
+```typescript
+load() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
 
 ### locate()
 

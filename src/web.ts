@@ -4,6 +4,10 @@ import type { AmapPlugin, Location, WeatherInfo, PermissionStatus } from './defi
 
 export class CapacitorAMapWeb extends WebPlugin implements AmapPlugin {
 
+  async load(): Promise<null> {
+    return null;
+  }
+
   async echo(): Promise<string>{
     return "";
   }

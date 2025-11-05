@@ -32,17 +32,17 @@ public class AMapPlugin: CAPPlugin, CAPBridgedPlugin, AMapLocationManagerDelegat
         // 插件加载时调用，可以在此预先初始化部分配置
         print("[AMapPlugin] load() called")
         if let iosKey = getConfigValue("iosKey") as? String {
+            AMapServices.shared().enableHTTPS = true
             AMapServices.shared().apiKey = iosKey
             AMapLocationManager.updatePrivacyAgree(AMapPrivacyAgreeStatus.didAgree)
             AMapLocationManager.updatePrivacyShow(AMapPrivacyShowStatus.didShow, privacyInfo: AMapPrivacyInfoStatus.didContain)
-            
-            self.aMapLocationManager = AMapLocationManager()
+            self.aMapLocationManager = AMapLocationManager.init()
             self.aMapLocationManager?.delegate = self
             self.aMapLocationManager?.pausesLocationUpdatesAutomatically = false
             self.aMapLocationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
             self.aMapLocationManager?.locationTimeout = 3
             self.aMapLocationManager?.reGeocodeTimeout = 3
-            
+            print(iosKey)
             call.resolve()
         } else {
             call.reject("未配置 iOS Key")
@@ -96,7 +96,7 @@ public class AMapPlugin: CAPPlugin, CAPBridgedPlugin, AMapLocationManagerDelegat
             AMapLocationManager.updatePrivacyAgree(AMapPrivacyAgreeStatus.didAgree)
             AMapLocationManager.updatePrivacyShow(AMapPrivacyShowStatus.didShow, privacyInfo: AMapPrivacyInfoStatus.didContain)
             
-            self.aMapLocationManager = AMapLocationManager()
+            self.aMapLocationManager = AMapLocationManager.init()
             self.aMapLocationManager?.delegate = self
             self.aMapLocationManager?.pausesLocationUpdatesAutomatically = false
             self.aMapLocationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -111,9 +111,10 @@ public class AMapPlugin: CAPPlugin, CAPBridgedPlugin, AMapLocationManagerDelegat
     
     // MARK: - 定位
     @objc func locate(_ call: CAPPluginCall) {
+        print("定位")
         locateCalls.append(call)
         self.aMapLocationManager?.requestLocation(withReGeocode: true, completionBlock: { [weak self] (location: CLLocation?, reGeocode: AMapLocationReGeocode?, error: Error?) in
-            guard let self = self else { return }
+            guard self != nil else { return }
             
             if let error = error as NSError? {
                 NSLog("定位错误: {\(error.code) - \(error.localizedDescription)}")

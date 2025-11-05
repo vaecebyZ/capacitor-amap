@@ -9,7 +9,7 @@ PODS:
   - Capacitor (7.0.0):
     - CapacitorCordova
   - CapacitorCordova (7.0.0)
-  - VaecebyzCapacitorAmap (1.0.7):
+  - VaecebyzCapacitorAmap (1.0.8):
     - AMap3DMap-NO-IDFA
     - AMapLocation-NO-IDFA
     - AMapSearch-NO-IDFA
@@ -42,7 +42,7 @@ SPEC CHECKSUMS:
   AMapSearch-NO-IDFA: 53b2193244be8f07f3be0a4d5161200236960587
   Capacitor: 82d1f3b4480d66b5996814f74500dcbc0908558c
   CapacitorCordova: 345f93b7edd121db98e4ec20ac94d6d7bcaf7e48
-  VaecebyzCapacitorAmap: 8379a0790ba6dadb67c33dc70e24926799037582
+  VaecebyzCapacitorAmap: 2eb558cea4c3682cb870cda315cb1ac58df8d022
 
 PODFILE CHECKSUM: 1a63da6ddd2842a9513e1c39c4eb097128e75dcb
 

@@ -15,6 +15,9 @@ export interface PermissionStatus {
 }
 
 export interface AmapPlugin {
+
+  load(): Promise<null>;
+
   locate(): Promise<Location | undefined>;
 
   weather(param: { adCode: string }): Promise<WeatherInfo | undefined>;
