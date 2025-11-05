@@ -4,18 +4,22 @@ import AMapFoundationKit
 import AMapLocationKit
 import AMapSearchKit
 import MAMapKit
+import CoreLocation
 
 var locateCalls = [CAPPluginCall]()
 
 @objc(AMapPlugin)
-public class AMapPlugin: CAPPlugin, CAPBridgedPlugin, AMapLocationManagerDelegate, AMapSearchDelegate {
+public class AMapPlugin: CAPPlugin, CAPBridgedPlugin, AMapLocationManagerDelegate, AMapSearchDelegate, CLLocationManagerDelegate {
     public let identifier = "AMapPlugin"
     public let jsName = "CapacitorAMap"
     public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "load", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "init", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "locate", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "weather", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "calculate", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "calculate", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "checkPermissions", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "requestPermissions", returnType: CAPPluginReturnPromise)
     ]
     
     var aMapLocationManager: AMapLocationManager? = nil
@@ -24,10 +28,66 @@ public class AMapPlugin: CAPPlugin, CAPBridgedPlugin, AMapLocationManagerDelegat
     var isInLocation = false
     
     // MARK: - 生命周期
-    override public func load() {
+    @objc public func load(_ call: CAPPluginCall) {
         // 插件加载时调用，可以在此预先初始化部分配置
         print("[AMapPlugin] load() called")
+        if let iosKey = getConfigValue("iosKey") as? String {
+            AMapServices.shared().apiKey = iosKey
+            AMapLocationManager.updatePrivacyAgree(AMapPrivacyAgreeStatus.didAgree)
+            AMapLocationManager.updatePrivacyShow(AMapPrivacyShowStatus.didShow, privacyInfo: AMapPrivacyInfoStatus.didContain)
+            
+            self.aMapLocationManager = AMapLocationManager()
+            self.aMapLocationManager?.delegate = self
+            self.aMapLocationManager?.pausesLocationUpdatesAutomatically = false
+            self.aMapLocationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            self.aMapLocationManager?.locationTimeout = 3
+            self.aMapLocationManager?.reGeocodeTimeout = 3
+            
+            call.resolve()
+        } else {
+            call.reject("未配置 iOS Key")
+        }
     }
+
+    @objc public override func checkPermissions(_ call: CAPPluginCall) {
+        let status = CLLocationManager.authorizationStatus()
+        
+        switch status {
+        case .notDetermined:
+            call.resolve(["status": "notDetermined"])
+        case .restricted:
+            call.resolve(["status": "restricted"])
+        case .denied:
+            call.resolve(["status": "denied"])
+        case .authorizedAlways, .authorizedWhenInUse:
+            call.resolve(["status": "granted"])
+        @unknown default:
+            call.resolve(["status": "unknown"])
+        }
+    }
+
+    @objc public override func requestPermissions(_ call: CAPPluginCall) {
+        guard CLLocationManager.locationServicesEnabled() else {
+            call.reject("定位服务未启用")
+            return
+        }
+
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        // 请求权限
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+
+        // 检查请求后的权限状态
+        let status = CLLocationManager.authorizationStatus()
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            call.resolve(["status": "granted"])
+        } else {
+            call.reject("定位权限请求失败")
+        }
+    }
+
     
     // MARK: - 初始化
     @objc func `init`(_ call: CAPPluginCall) {
